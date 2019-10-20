@@ -3,7 +3,7 @@ name: CI
 on: [push]
 
 jobs:
-  build_and_test:
+  build_ubuntu:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -17,3 +17,25 @@ jobs:
         with:
           name: latex-mindmapper
           path: target/release/latex-mindmapper
+  build_windows:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: x86_64-pc-windows-gnu
+          override: true
+      - uses: actions-rs/cargo@v1
+        with:
+          use-cross: true
+          command: build
+          args: --target x86_64-pc-windows-gnu --release --all-features
+      - name: ls artifacts
+        run: ls -R target
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: latex-mindmapper.exe
+          path: target/x86_64-pc-windows-gnu/release/latex-mindmapper.exe
