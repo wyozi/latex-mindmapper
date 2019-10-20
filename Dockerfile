@@ -2,7 +2,7 @@ FROM rust:latest as build
 
 WORKDIR /usr/src/latex-mindmapper
 
-COPY Cargo.toml Cargo.lock src/ ./
+COPY . ./
 RUN cargo build --release
 RUN cargo install --path .
 
