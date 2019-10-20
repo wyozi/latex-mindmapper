@@ -1,0 +1,8 @@
+[package]
+name = "latex-mindmapper"
+version = "0.1.0"
+authors = ["wyozi <joonasmertanen@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+regex = "1"
