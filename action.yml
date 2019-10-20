@@ -1,0 +1,13 @@
+# action.yml
+name: 'Run LaTeX mindmapper'
+description: 'Runs latex-mindmapper'
+inputs:
+  filename:
+    description: 'The main .tex file'
+    required: true
+    default: 'main.tex'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.filename }}
