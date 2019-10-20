@@ -19,4 +19,6 @@ Print examples/foo.tex mindmap to output.png using Graphviz:
 
 `cargo run -- examples/foo.tex | dot -Tpng > output.png`
 
-Produces ![](examples/foo_output.png)
+Produces
+
+![](examples/foo_output.png)
