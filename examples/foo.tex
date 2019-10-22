@@ -2,18 +2,21 @@
  
 \begin{document}
 
-\lmmnode{}{root}[Start]
+% No-op lmmnode so that the commands don't do anything
+\newcommand{\lmmnode}[4][]{}
 
-\lmmnode{root}{p1}[Introduction]
+\lmmnode{}{root}{Start}
+
+\lmmnode{root}{p1}{Introduction}
 Hello world
 
-\lmmnode{p1}{ex1}[Example 1]
+\lmmnode{p1}{ex1}{Example 1}
 Example of something
 
-\lmmnode{p1}{ex2}[Example 2]
+\lmmnode{p1}{ex2}{Example 2}
 Example of something else
 
-\lmmnode{root}{p2}[Conclusion]
+\lmmnode{root}{p2}{Conclusion}
 This concludes it
 
 \end{document}
