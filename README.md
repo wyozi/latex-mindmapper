@@ -6,11 +6,11 @@ LaTeX file to make it easier to keep it up to date.
 
 ### Usage
 
-1. Add the following no-op command to your .tex file, so that `\lmmnode` will not throw any errors: `\newcommand{\lmmnode}[3][]{}`
+1. Add the following no-op command to your .tex file, so that `\lmmnode` will not throw any errors: `\newcommand{\lmmnode}[4][]{}`
 2. Insert `\lmmnode` commands into your .tex file
-    - Syntax: `\lmmnode{<parent_id>}{<id>}[<label>]`
-    - (example) root node: `\lmmnode{}{root}[Root node]`
-    - (example) branch: `\lmmnode{root}{branch1}[Branch]`
+    - Syntax: `\lmmnode{<parent_id>}{<id>}{<label>}`
+    - (example) root node: `\lmmnode{}{root}{Root node}`
+    - (example) branch: `\lmmnode{root}{branch1}{Branch}`
 3. Run `latex-mindmapper my-article.tex` to print DOT description of the file to stdout.
 
 ### Examples
