@@ -1,18 +1,21 @@
 use super::parser::SourceNode;
+use std::fmt::Write;
 
-pub fn print_dot(source_nodes: &Vec<SourceNode>) {
-    println!("graph mygraph {{");
+pub fn format_dot(source_nodes: &Vec<SourceNode>) -> String {
+    let mut s = String::new();
+    writeln!(&mut s, "graph mygraph {{");
 
     // Set each node's label
     for node in source_nodes.iter().filter(|n| n.label.is_some()) {
-        println!("\t{} [label=\"{}\"]", node.id, node.label.as_ref().unwrap());
+        writeln!(&mut s, "\t{} [label=\"{}\"]", node.id, node.label.as_ref().unwrap());
     }
 
     // Draw links
     for node in source_nodes.iter().filter(|n| n.parent_id.is_some()) {
-        println!("\t{} -- {}", node.parent_id.as_ref().unwrap(), node.id);
+        writeln!(&mut s, "\t{} -- {}", node.parent_id.as_ref().unwrap(), node.id);
     }
 
 
-    println!("}}");
+    writeln!(&mut s, "}}");
+    s
 }

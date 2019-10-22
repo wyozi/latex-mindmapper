@@ -2,18 +2,25 @@ mod parser;
 mod linker;
 mod dot;
 
-use std::env;
 use std::process;
 use std::fs;
+use std::path::PathBuf;
+use structopt::StructOpt;
+
+#[derive(StructOpt, Debug)]
+#[structopt(name = "basic")]
+struct Opt {
+    #[structopt(short, long, parse(from_os_str))]
+    output: Option<PathBuf>,
+    
+    #[structopt(name = "FILE", parse(from_os_str))]
+    file: PathBuf,
+}
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    if args.len() < 2 {
-        eprintln!("Usage: latex-mindmapper <filename.tex>");
-        process::exit(1);
-    }
+    let opt = Opt::from_args();
 
-    let input = fs::read_to_string(&args[1]);
+    let input = fs::read_to_string(&opt.file);
     if let Err(e) = input {
         eprintln!("Failed to read input file: {}", e);
         process::exit(1);
@@ -24,5 +31,10 @@ fn main() {
         eprintln!("Invalid links: {}", e);
         process::exit(1);
     }
-    dot::print_dot(&source_nodes);
+    
+    let out = dot::format_dot(&source_nodes);
+    match opt.output {
+        Some(f) => fs::write(f, &out).unwrap(),
+        None => println!("{}", out)
+    }
 }
