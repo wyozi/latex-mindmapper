@@ -9,10 +9,10 @@ pub fn verify_links(source_nodes: &Vec<SourceNode>) -> Result<(), String> {
         ids.insert(&node.id);
     }
 
-    // Link nodes
+    // Check node links
     source_nodes
         .iter()
-        .filter_map(|n| n.parent_id.as_ref().map(|par_id| (&n.id, par_id)))
+        .flat_map(|n| n.parent_ids.iter().map(move |par_id| (&n.id, par_id)))
         .map(|(id, parent_id)| {
             if ids.contains(&parent_id) {
                 Ok(())
@@ -31,10 +31,10 @@ mod tests {
     #[test]
     fn test_verify_links() {
         assert_eq!(verify_links(&vec!(
-            SourceNode { parent_id: None, id: "foo".to_string(), label: None }
+            SourceNode { parent_ids: vec!(), id: "foo".to_string(), label: None }
         )), Ok(()));
         assert_eq!(verify_links(&vec!(
-            SourceNode { parent_id: Some("bar".to_string()), id: "foo".to_string(), label: None }
+            SourceNode { parent_ids: vec!("bar".to_string()), id: "foo".to_string(), label: None }
         )), Err("foo has missing parent bar".to_string()));
     }
 }
