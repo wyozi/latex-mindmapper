@@ -31,16 +31,22 @@ Latex-mindmapper can be used as a Github action step:
 on: [push]
 
 jobs:
-  hello_world_job:
+  create_mindmap:
     runs-on: ubuntu-latest
-    name: A job to say hello
     steps:
-    - name: Hello world action step
-      id: hello
-      uses: actions/hello-world-docker-action@v1
+    - name: Checkout repository
+      uses: actions/checkout@v1
+    - name: Create mindmap
+      uses: wyozi/latex-mindmapper@master
       with:
-        who-to-greet: 'Mona the Octocat'
-    # Use the output from the `hello` step
-    - name: Get the output time
-      run: echo "The time was ${{ steps.hello.outputs.time }}"
+        filename: 'main.tex'
+    - name: Install graphviz
+      run: sudo apt update && sudo apt install graphviz
+    - name: Create mindmap
+      run: dot -Tpng mindmap.dot > mindmap.png
+    - name: Archive created mindmap
+      uses: actions/upload-artifact@v1
+      with:
+        name: mindmap.png
+        path: mindmap.png
 ```
